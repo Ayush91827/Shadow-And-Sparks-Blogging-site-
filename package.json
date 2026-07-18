@@ -1,0 +1,15 @@
+{
+  "name": "shadows-and-sparks-blog",
+  "version": "2.0.0",
+  "description": "A simple blog app with persistent SQLite storage, search, categories, and view counts.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ejs": "^3.1.10",
+    "better-sqlite3": "^11.3.0"
+  }
+}
