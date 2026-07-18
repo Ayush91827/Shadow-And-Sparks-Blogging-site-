@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+<main class="container">
+    <div class="form-container">
+        <h1>Create New Post</h1>
+        <% if (error) { %>
+            <p class="form-error"><%= error %></p>
+        <% } %>
+        <form action="/create" method="POST" class="post-form">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required placeholder="Enter the Title" value="<%= formData.title || '' %>">
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" required placeholder="Your Name" value="<%= formData.author || '' %>">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat %>" <%= formData.category === cat ? 'selected' : '' %>><%= cat %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea id="content" name="content" rows="12" required placeholder="Write your thoughts here..."><%= formData.content || '' %></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="button">Publish Post</button>
+                <a href="/" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('partials/footer') %>

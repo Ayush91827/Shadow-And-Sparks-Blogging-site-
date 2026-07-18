@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+<main class="container">
+    <div class="hero">
+        <h1>Welcome to Shadows & Sparks.</h1>
+        <p>Share your thoughts with yourself and then maybe the world. Write them down and, think Mark think!</p>
+        <p>-Nolan</p>
+    </div>
+
+    <form action="/" method="GET" class="search-bar">
+        <input type="text" name="search" placeholder="Search by title or author..." value="<%= search %>">
+        <select name="category">
+            <option value="">All Categories</option>
+            <% categories.forEach(cat => { %>
+                <option value="<%= cat %>" <%= category === cat ? 'selected' : '' %>><%= cat %></option>
+            <% }) %>
+        </select>
+        <button type="submit" class="button-small">Search</button>
+        <% if (search || category) { %>
+            <a href="/" class="button-small button-secondary">Clear</a>
+        <% } %>
+    </form>
+
+    <% if (posts.length === 0) { %>
+        <div class="empty-state">
+            <% if (search || category) { %>
+                <h2>No Posts Found</h2>
+                <p>Try a different search term or category</p>
+                <a href="/" class="button">Clear Search</a>
+            <% } else { %>
+                <h2>No Posts Yet</h2>
+                <p>Start by creating your first blog post</p>
+                <a href="/create" class="button">Create Your First Post</a>
+            <% } %>
+        </div>
+    <% } else { %>
+        <div class="posts-grid">
+            <% posts.forEach(post => { %>
+                <article class="post-card">
+                    <div class="post-header">
+                        <h2><a href="/post/<%= post.id %>"><%= post.title %></a></h2>
+                        <span class="post-date"><%= post.date %></span>
+                    </div>
+                    <p class="post-author">By <%= post.author %></p>
+                    <p class="post-tags">
+                        <span class="category-badge"><%= post.category %></span>
+                        &middot; <%= post.readingTime %> min read &middot; <%= post.views %> views
+                    </p>
+                    <p class="post-excerpt">
+                        <%= post.content.substring(0, 150) %><%= post.content.length > 150 ? '...' : '' %>
+                    </p>
+                    <div class="post-actions">
+                        <a href="/post/<%= post.id %>" class="button-small">Read More</a>
+                        <a href="/edit/<%= post.id %>" class="button-small button-secondary">Edit</a>
+                        <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="button-small button-danger"
+                                onclick="return confirm('Are you sure you want to delete this post?')">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </article>
+            <% }) %>
+        </div>
+    <% } %>
+</main>
+
+<%- include('partials/footer') %>
